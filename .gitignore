@@ -1,0 +1,7 @@
+.idea
+conveyor.iml
+conveyor/gradle
+conveyor/.gradle
+conveyor/gradlew
+conveyor/gradlew.bat
+conveyor/settings.gradle
