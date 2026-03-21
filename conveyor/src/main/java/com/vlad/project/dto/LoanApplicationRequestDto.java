@@ -15,7 +15,7 @@ public class LoanApplicationRequestDto {
     String lastName;
     String middleName;
     String email;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate birthdate;
     String passportSeries;
     String passportNumber;
