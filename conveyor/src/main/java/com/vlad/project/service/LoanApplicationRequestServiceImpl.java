@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.math.BigDecimal.*;
 
@@ -32,47 +34,50 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
         var userAmount = loan.getAmount();
         var userTerm = loan.getTerm();
 
-        return List.of(
-                new LoanOfferDto(generateApplicationId(), userAmount,
-                        amountCounter(userAmount, userTerm, currentRate, false, false),
-                        userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, false, false),
-                        currentRate, false, false),
+        var firstOffer = new LoanOfferDto(generateApplicationId(), userAmount,
+                amountCounter(userAmount, userTerm, currentRate, false, false), userTerm,
+                monthlyPaymentCounter(userAmount, userTerm, currentRate, false, false),
+                getRate(currentRate, false, false), false, false);
 
-                new LoanOfferDto(generateApplicationId(), userAmount,
-                        amountCounter(userAmount, userTerm, currentRate, false, true),
-                        userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, false, true),
-                        currentRate, false, true),
+        var secondOffer = new LoanOfferDto(generateApplicationId(), userAmount,
+                amountCounter(userAmount, userTerm, currentRate, false, true),
+                userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, false, true),
+                getRate(currentRate, false, true), false, true);
 
-                new LoanOfferDto(generateApplicationId(), userAmount,
-                        amountCounter(userAmount, userTerm, currentRate, true, false),
-                        userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, true, false),
-                        currentRate, true, false),
 
-                new LoanOfferDto(generateApplicationId(), userAmount,
-                        amountCounter(userAmount, userTerm, currentRate, true, true),
-                        userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, true, true),
-                        currentRate, true, true)
+        var thirdOffer = new LoanOfferDto(generateApplicationId(), userAmount,
+                amountCounter(userAmount, userTerm, currentRate, true, false),
+                userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, true, false),
+                getRate(currentRate, true, false), true, false);
 
-        );
+        var fourthOffer = new LoanOfferDto(generateApplicationId(), userAmount,
+                amountCounter(userAmount, userTerm, currentRate, true, true),
+                userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, true, true),
+                getRate(currentRate, true, true), true, true);
+
+
+        return Stream.of(firstOffer, secondOffer, thirdOffer, fourthOffer)
+                .sorted(Comparator.comparing(LoanOfferDto::getTotalAmount).reversed()).toList();
     }
 
     private static BigDecimal monthlyPaymentCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance, Boolean salaryClient) {
         BigDecimal newRate = rate;
-        BigDecimal insurance = amount.multiply(valueOf(0.15));
+        BigDecimal insurance = amount;
 
         if (isInsurance) {
-            newRate = rate.subtract(valueOf(3));
-             insurance = amount.add(insurance);
+            newRate = newRate.subtract(valueOf(3));
+             insurance = amount.multiply(valueOf(0.15)).add(insurance);
         }
         if (salaryClient) {
-            newRate = rate.subtract(valueOf(1));
+            newRate = newRate.subtract(valueOf(1));
         }
 
-        var divideResult = newRate.divide(valueOf(12), 3, RoundingMode.HALF_UP);
+        var divideResult = newRate.divide(valueOf(1200), 10, RoundingMode.HALF_UP);
 
-        var denominator = 1 - Math.pow((1.0 + divideResult.doubleValue()), -term.doubleValue());
+        var powWithSum = valueOf(1).add(divideResult).pow(term);
 
-        var formula = divideResult.divide(valueOf(denominator), 3, RoundingMode.HALF_UP);
+        var denominator = valueOf(1).subtract(valueOf(1).divide(powWithSum, 10, RoundingMode.HALF_UP));
+        var formula = divideResult.divide(denominator, 10, RoundingMode.HALF_UP);
 
         return insurance.multiply(formula);
     }
@@ -84,6 +89,13 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
 
     private Long generateApplicationId() {
         return applicationId++;
+    }
+
+    private static BigDecimal getRate(BigDecimal currentRate, Boolean isInsurance, Boolean salaryClient) {
+        if (isInsurance) currentRate = currentRate.subtract(valueOf(3));
+        if (salaryClient) currentRate = currentRate.subtract(valueOf(1));
+
+        return currentRate;
     }
 
 }
