@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface LoanApplicationRequestService {
 
-    List<LoanOfferDto> preScoring(LoanApplicationRequestDto loan);
+    List<LoanOfferDto> generateCreditOffers(LoanApplicationRequestDto loan);
 }

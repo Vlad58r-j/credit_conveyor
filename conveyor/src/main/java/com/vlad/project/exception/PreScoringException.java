@@ -1,4 +1,4 @@
-package com.vlad.project.filter.exception;
+package com.vlad.project.exception;
 
 public class PreScoringException extends RuntimeException {
 

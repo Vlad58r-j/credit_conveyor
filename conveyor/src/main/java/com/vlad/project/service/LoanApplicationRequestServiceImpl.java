@@ -1,9 +1,9 @@
 package com.vlad.project.service;
 
-import com.vlad.project.config.RateConfiguration;
+import com.vlad.project.config.RateProperties;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
-import com.vlad.project.filter.UserFilter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,18 +19,17 @@ import static java.math.BigDecimal.*;
 @RequiredArgsConstructor
 public class LoanApplicationRequestServiceImpl implements LoanApplicationRequestService {
 
-    private final RateConfiguration rateConfiguration;
-    private Long applicationId;
+    private final RateProperties rateConfiguration;
+    private static Long applicationId;
 
     @Override
-    public List<LoanOfferDto> preScoring(LoanApplicationRequestDto loan) {
-        log.info("Вызвался метод preScoring = {}", loan);
-        new UserFilter().preScoring(loan);
-
+    public List<LoanOfferDto> generateCreditOffers(LoanApplicationRequestDto loan) {
         applicationId = 1L;
         var currentRate = rateConfiguration.rate();
         var userAmount = loan.getAmount();
         var userTerm = loan.getTerm();
+
+        log.info("Генерируем 4 кредитных предложений");
 
         return List.of(
                 new LoanOfferDto(generateApplicationId(), userAmount,
@@ -62,7 +61,7 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
 
         if (isInsurance) {
             newRate = rate.subtract(valueOf(3));
-             insurance = amount.add(insurance);
+            insurance = amount.add(insurance);
         }
         if (salaryClient) {
             newRate = rate.subtract(valueOf(1));
@@ -78,7 +77,8 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
     }
 
     private static BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance, Boolean salaryClient) {
-
+        log.info("Считаем общую сумму для applicationId = {} выплат при amount = {}, term = {}, rate = {}, insurance = {}, salaryClient = {}",
+                applicationId - 1, amount, term, rate, isInsurance, salaryClient);
         return monthlyPaymentCounter(amount, term, rate, isInsurance, salaryClient).multiply(valueOf(term));
     }
 
