@@ -3,7 +3,7 @@ package com.vlad.project.service;
 import com.vlad.project.config.RateProperties;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
-import com.vlad.project.filter.UserFilter;
+import com.vlad.project.exception.PreScoringException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.math.BigDecimal.*;
@@ -26,13 +27,13 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
 
     @Override
     public List<LoanOfferDto> generateCreditOffers(LoanApplicationRequestDto loan) {
-        log.info("Вызвался метод preScoring = {}", loan);
-        new UserFilter().preScoring(loan);
-
+        loanDtoValidation(loan);
         applicationId = 1L;
         var currentRate = rateConfiguration.rate();
         var userAmount = loan.getAmount();
         var userTerm = loan.getTerm();
+
+        log.info("Генерируем 4 кредитных предложения");
 
         var firstOffer = new LoanOfferDto(generateApplicationId(), userAmount,
                 amountCounter(userAmount, userTerm, currentRate, false, false), userTerm,
@@ -60,30 +61,53 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
                 .sorted(Comparator.comparing(LoanOfferDto::getTotalAmount).reversed()).toList();
     }
 
-    private static BigDecimal monthlyPaymentCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance, Boolean salaryClient) {
+    private void loanDtoValidation(LoanApplicationRequestDto loan) {
+        Optional.ofNullable(loan)
+                .orElseThrow(() -> new PreScoringException("LoanDto не может быть null"));
+
+        Optional.ofNullable(loan.getTerm())
+                .filter(term -> term.compareTo(6) > -1)
+                .orElseThrow(() -> new PreScoringException("Минимальный срок кредита"));
+
+        Optional.ofNullable(loan.getAmount())
+                .filter(amount -> amount.compareTo(new BigDecimal(10_000)) > -1)
+                .orElseThrow(() -> new PreScoringException("Некорректная сумма кредита"));
+    }
+
+    public BigDecimal monthlyPaymentCounter(BigDecimal amount, Integer term,
+                                                   BigDecimal rate, Boolean isInsurance,
+                                                   Boolean salaryClient) {
         BigDecimal newRate = rate;
         BigDecimal insurance = amount;
 
         if (isInsurance) {
             newRate = newRate.subtract(valueOf(3));
-             insurance = amount.multiply(valueOf(0.15)).add(insurance);
+
+            var insurancePrice = amount.multiply(valueOf(0.01)).multiply(valueOf(term));
+            insurance = insurancePrice.add(insurance);
+            log.info("При наличии страховки ставка уменьшается на 3 и становится = {}," +
+                     " сумма кредита увеличивается на 15% и становится = {}", newRate, insurance);
         }
         if (salaryClient) {
-            newRate = newRate.subtract(valueOf(1));
+            newRate = newRate.subtract(ONE);
+            log.info("У зарплатных клиентов ставка уменьшается на 1% и становится = {}", newRate);
         }
 
-        var divideResult = newRate.divide(valueOf(1200), 10, RoundingMode.HALF_UP);
+        var percent = newRate.divide(valueOf(100), 10, RoundingMode.HALF_UP)
+                .divide(valueOf(12), 10, RoundingMode.HALF_UP);
 
-        var powWithSum = valueOf(1).add(divideResult).pow(term);
+        var onePlusPercent = ONE.add(percent);
 
-        var denominator = valueOf(1).subtract(valueOf(1).divide(powWithSum, 10, RoundingMode.HALF_UP));
-        var formula = divideResult.divide(denominator, 10, RoundingMode.HALF_UP);
+        var pow = onePlusPercent.pow(term);
+        var reversePow = ONE.divide(pow, 10, RoundingMode.HALF_UP);
 
-        return insurance.multiply(formula);
+        var oneMinusPow = ONE.subtract(reversePow);
+
+        return insurance.multiply(percent)
+                .divide(oneMinusPow, 0, RoundingMode.HALF_UP);
     }
 
-    private static BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance, Boolean salaryClient) {
-
+    public BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance, Boolean salaryClient) {
         return monthlyPaymentCounter(amount, term, rate, isInsurance, salaryClient).multiply(valueOf(term));
     }
 
@@ -91,7 +115,7 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
         return applicationId++;
     }
 
-    private static BigDecimal getRate(BigDecimal currentRate, Boolean isInsurance, Boolean salaryClient) {
+    private BigDecimal getRate(BigDecimal currentRate, Boolean isInsurance, Boolean salaryClient) {
         if (isInsurance) currentRate = currentRate.subtract(valueOf(3));
         if (salaryClient) currentRate = currentRate.subtract(valueOf(1));
 
