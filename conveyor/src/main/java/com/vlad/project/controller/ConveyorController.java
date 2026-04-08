@@ -1,7 +1,9 @@
 package com.vlad.project.controller;
 
+import com.vlad.project.dto.CreditDto;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
+import com.vlad.project.dto.ScoringDataDto;
 import com.vlad.project.service.LoanApplicationRequestServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -45,6 +47,14 @@ public class ConveyorController {
                                                      LoanApplicationRequestDto loan) {
         log.info("Зашли в метод offers для генерации кредитных предложений");
         return ResponseEntity.ok(loanApplicationRequestService.generateCreditOffers(loan));
+    }
+
+    @PostMapping("/calculation")
+    public ResponseEntity<CreditDto> calculation(@RequestBody
+                                                 ScoringDataDto scoringDataDto) {
+        log.info("Зашли в метод calculation для генерации кредитных предложений");
+
+        return null;
     }
 
 

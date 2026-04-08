@@ -1,6 +1,7 @@
 package com.vlad.project.service;
 
 import com.vlad.project.config.RateProperties;
+import com.vlad.project.counter.MonthlyPaymentCounter;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
 import com.vlad.project.exception.PreScoringException;
@@ -20,7 +21,7 @@ import static java.math.BigDecimal.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class LoanApplicationRequestServiceImpl implements LoanApplicationRequestService {
+public class LoanApplicationRequestServiceImpl implements LoanApplicationRequestService, MonthlyPaymentCounter {
 
     private final RateProperties rateConfiguration;
     private static Long applicationId;
@@ -74,6 +75,7 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
                 .orElseThrow(() -> new PreScoringException("Некорректная сумма кредита"));
     }
 
+    @Override
     public BigDecimal monthlyPaymentCounter(BigDecimal amount, Integer term,
                                                    BigDecimal rate, Boolean isInsurance,
                                                    Boolean salaryClient) {
@@ -107,7 +109,9 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
                 .divide(oneMinusPow, 0, RoundingMode.HALF_UP);
     }
 
-    public BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance, Boolean salaryClient) {
+    @Override
+    public BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance,
+                                    Boolean salaryClient) {
         return monthlyPaymentCounter(amount, term, rate, isInsurance, salaryClient).multiply(valueOf(term));
     }
 
