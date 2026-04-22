@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 
-import static java.lang.Math.abs;
 import static java.math.BigDecimal.*;
 import static com.vlad.project.filter.ScoringDataFilter.scoringDataValidation;
 
@@ -114,24 +114,16 @@ public class CurrentRateCounter {
     }
 
     private boolean femaleAge(LocalDate birthday) {
-        var now = LocalDate.now();
-        boolean moreMin = now.getYear() - birthday.getYear() >= 35 &&
-                          abs(now.getMonthValue() - birthday.getMonthValue()) >= 0 &&
-                          abs(now.getDayOfMonth() - birthday.getDayOfMonth()) > 0;
-        boolean lessMax = now.getYear() - birthday.getYear() <= 65 &&
-                          abs(now.getMonthValue() - birthday.getMonthValue()) >= 0 &&
-                          abs(now.getDayOfMonth() - birthday.getDayOfMonth()) > 0;
-        return moreMin && lessMax;
+        Period period = Period.between(birthday, LocalDate.now());
+        return ((period.getYears() >= 35 && period.getMonths() == 0 && period.getDays() > 0) ||
+                (period.getYears() > 35 && period.getMonths() > 0))
+               && period.getYears() <= 65;
     }
 
     private boolean maleAge(LocalDate birthday) {
-        var now = LocalDate.now();
-        boolean moreMin = now.getYear() - birthday.getYear() >= 30 &&
-                          abs(now.getMonthValue() - birthday.getMonthValue()) >= 0 &&
-                          abs(now.getDayOfMonth() - birthday.getDayOfMonth()) > 0;
-        boolean lessMax = now.getYear() - birthday.getYear() <= 55 &&
-                          abs(now.getMonthValue() - birthday.getMonthValue()) >= 0 &&
-                          abs(now.getDayOfMonth() - birthday.getDayOfMonth()) > 0;
-        return moreMin && lessMax;
+        Period period = Period.between(birthday, LocalDate.now());
+        return ((period.getYears() >= 30 && period.getMonths() == 0 && period.getDays() > 0) ||
+                (period.getYears() > 30 && period.getMonths() > 0))
+               && period.getYears() <= 55;
     }
 }

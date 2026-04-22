@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ import static java.math.BigDecimal.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class LoanApplicationRequestServiceImpl implements LoanApplicationRequestService, MonthlyPaymentCounter {
+public class LoanApplicationRequestServiceImpl implements LoanApplicationRequestService {
 
     private final RateProperties rateConfiguration;
     private static Long applicationId;
@@ -75,7 +74,6 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
                 .orElseThrow(() -> new PreScoringException("Некорректная сумма кредита"));
     }
 
-    @Override
     public BigDecimal monthlyPaymentCounter(BigDecimal amount, Integer term,
                                                    BigDecimal rate, Boolean isInsurance,
                                                    Boolean salaryClient) {
@@ -95,21 +93,9 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
             log.info("У зарплатных клиентов ставка уменьшается на 1% и становится = {}", newRate);
         }
 
-        var percent = newRate.divide(valueOf(100), 10, RoundingMode.HALF_UP)
-                .divide(valueOf(12), 10, RoundingMode.HALF_UP);
-
-        var onePlusPercent = ONE.add(percent);
-
-        var pow = onePlusPercent.pow(term);
-        var reversePow = ONE.divide(pow, 10, RoundingMode.HALF_UP);
-
-        var oneMinusPow = ONE.subtract(reversePow);
-
-        return insurance.multiply(percent)
-                .divide(oneMinusPow, 0, RoundingMode.HALF_UP);
+        return MonthlyPaymentCounter.monthlyPaymentCounter(newRate, term, insurance);
     }
 
-    @Override
     public BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance,
                                     Boolean salaryClient) {
         return monthlyPaymentCounter(amount, term, rate, isInsurance, salaryClient).multiply(valueOf(term));

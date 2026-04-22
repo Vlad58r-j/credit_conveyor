@@ -4,7 +4,7 @@ import com.vlad.project.dto.CreditDto;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
 import com.vlad.project.dto.ScoringDataDto;
-import com.vlad.project.service.LoanApplicationRequestServiceImpl;
+import com.vlad.project.service.LoanApplicationRequestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,7 +31,7 @@ import java.util.List;
         description = "Рассчитываем и выводим кредитные заявки и предложения")
 public class ConveyorController {
 
-    private final LoanApplicationRequestServiceImpl loanApplicationRequestService;
+    private final LoanApplicationRequestService loanApplicationRequestService;
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Список предложений"),

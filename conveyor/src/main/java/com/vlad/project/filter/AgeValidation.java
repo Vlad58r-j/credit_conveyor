@@ -5,16 +5,15 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 import java.time.LocalDate;
-
-import static java.lang.Math.*;
+import java.time.Period;
 
 public class AgeValidation implements ConstraintValidator<Age, LocalDate> {
 
     @Override
     public boolean isValid(LocalDate value, ConstraintValidatorContext context) {
         var now = LocalDate.now();
-        return now.getYear() - value.getYear() >= 18 &&
-               abs(now.getMonthValue() - value.getMonthValue()) >= 0 &&
-               abs(now.getDayOfMonth() - value.getDayOfMonth()) > 0;
+        Period between = Period.between(value, now);
+        return (between.getYears() >= 18 && between.getMonths() == 0 && between.getDays() > 0) ||
+               (between.getYears() >= 18 && between.getMonths() > 0);
     }
 }

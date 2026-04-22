@@ -39,7 +39,8 @@ public class ScoringDataFilter {
         Optional.ofNullable(employee.getBirthday())
                 .filter(birthday -> {
                     Period period = Period.between(birthday, LocalDate.now());
-                    return (period.getYears() > 20 && period.getMonths() >= 0 && period.getDays() > 0)
+                    return ((period.getYears() >= 20 && period.getMonths() == 0 && period.getDays() > 0) ||
+                            (period.getYears() > 20 && period.getMonths() > 0))
                            && period.getYears() < 60;
                 })
                 .orElseThrow(() -> new ScoringException("Возраст заемщика должен быть от 20 до 60"));
