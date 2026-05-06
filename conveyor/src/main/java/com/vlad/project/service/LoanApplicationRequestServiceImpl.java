@@ -93,7 +93,7 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
             log.info("У зарплатных клиентов ставка уменьшается на 1% и становится = {}", newRate);
         }
 
-        return MonthlyPaymentCounter.monthlyPaymentCounter(newRate, term, insurance);
+        return MonthlyPaymentCounter.monthlyPaymentCounter(newRate, term, insurance, isInsurance);
     }
 
     public BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance,

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CurrentRateCounterTest {
 
     @Autowired
-    private CurrentRateCounter counter;
+    private CurrentRateCounterImpl counter;
 
     @Test
     void checkCorrectCurrentRateOnlyWorker() {

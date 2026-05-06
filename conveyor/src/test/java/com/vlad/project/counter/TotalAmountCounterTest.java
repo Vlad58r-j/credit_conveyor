@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TotalAmountCounterTest {
 
     @Autowired
-    private CurrentRateCounter rate;
+    private CurrentRateCounterImpl rate;
 
     @Test
     void correctAmountWithCorrectData() {
@@ -96,6 +96,33 @@ public class TotalAmountCounterTest {
                 dto.getIsInsuranceEnabled());
 
         assertEquals(new BigDecimal(21_660), totalCreditAmount);
+    }
+
+    @Test
+    void chekWithFourteenPercentRate() {
+        ScoringDataDto dto = getCorrectScoringDataDtoMinusTwo();
+        BigDecimal totalCreditAmount = totalCreditAmount(new BigDecimal("200000"), rate.validRate(dto), 12,
+                true);
+
+        assertEquals(new BigDecimal("241344"), totalCreditAmount);
+    }
+
+    @Test
+    void chekWithFourteenPercentRateAndInsuranceEnabled() {
+        ScoringDataDto dto = getCorrectScoringDataDtoMinusTwo();
+        BigDecimal totalCreditAmount = totalCreditAmount(new BigDecimal("241344"), rate.validRate(dto), 12,
+                true);
+
+        assertEquals(new BigDecimal("291240"), totalCreditAmount);
+    }
+
+    @Test
+    void chekWithFourteenPercentRateAndInsuranceNotEnabled() {
+        ScoringDataDto dto = getCorrectScoringDataDtoMinusTwo();
+        BigDecimal totalCreditAmount = totalCreditAmount(new BigDecimal("241344"), rate.validRate(dto), 12,
+                false);
+
+        assertEquals(new BigDecimal("260040"), totalCreditAmount);
     }
 
 

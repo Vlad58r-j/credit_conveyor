@@ -8,7 +8,14 @@ import static java.math.BigDecimal.valueOf;
 
 public class MonthlyPaymentCounter {
 
-    public static BigDecimal monthlyPaymentCounter(BigDecimal rate, Integer term, BigDecimal amount){
+    public static BigDecimal monthlyPaymentCounter(BigDecimal rate, Integer term, BigDecimal amount,
+                                                   Boolean isInsuranceEnabled){
+        if (isInsuranceEnabled) {
+            var insurance = amount.multiply(valueOf(0.01)).multiply(valueOf(term));
+
+            amount = amount.add(insurance);
+        }
+
         var percent = rate.divide(valueOf(100), 10, RoundingMode.HALF_UP)
                 .divide(valueOf(12), 10, RoundingMode.HALF_UP);
 
