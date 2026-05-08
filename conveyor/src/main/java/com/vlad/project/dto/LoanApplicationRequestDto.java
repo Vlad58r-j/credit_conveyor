@@ -2,7 +2,6 @@ package com.vlad.project.dto;
 
 import com.vlad.project.annotation.Age;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.constraints.*;
 import lombok.Value;
 import org.springframework.format.annotation.DateTimeFormat;
