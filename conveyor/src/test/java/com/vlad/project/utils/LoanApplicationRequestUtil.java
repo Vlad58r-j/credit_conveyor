@@ -96,11 +96,10 @@ public class LoanApplicationRequestUtil {
     }
 
 
-
     public static ScoringDataDto getCorrectScoringDataDto() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDto(), "vlad58r",
                 false, false);
     }
@@ -112,21 +111,21 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoCancel() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoCancel(), "vlad58r",
                 false, false);
     }
 
     public static EmploymentDto getCorrectEmploymentDtoCancel() {
-        return new EmploymentDto(UNEMPLOYED, "1234567890", valueOf(80_000), WORKER,
+        return new EmploymentDto(UNEMPLOYED, "1234567890", valueOf(80_000), null,
                 14, 5);
     }
 
     public static ScoringDataDto getCorrectScoringDataDtoCancelVersionTwo() {
         return new ScoringDataDto(valueOf(20000000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoCancelVersionTwo(), "vlad58r",
                 false, false);
     }
@@ -136,10 +135,23 @@ public class LoanApplicationRequestUtil {
                 14, 5);
     }
 
+    public static ScoringDataDto getNotCorrectAmountWithCorrectScoringData() {
+        return new ScoringDataDto(valueOf(2000), 12, "Vlad", "Krivonos", MALE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
+                0, getNotCorrectEmploymentDtoAmount(), "vlad58r",
+                false, false);
+    }
+
+    public static EmploymentDto getNotCorrectEmploymentDtoAmount() {
+        return new EmploymentDto(EMPLOYED, "1234567890", valueOf(80_000), WORKER,
+                14, 5);
+    }
+
     public static ScoringDataDto getCorrectScoringDataDtoCancelAmount() {
         return new ScoringDataDto(valueOf(200), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoCancelAmount(), "vlad58r",
                 false, false);
     }
@@ -151,8 +163,8 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoCancelTerm() {
         return new ScoringDataDto(valueOf(20000), 5, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoCancelTerm(), "vlad58r",
                 false, false);
     }
@@ -164,8 +176,8 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoPlusOne() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoPlusOne(), "vlad58r",
                 false, false);
     }
@@ -177,8 +189,8 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoPlusThree() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoPlusThree(), "vlad58r",
                 false, false);
     }
@@ -190,8 +202,8 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoMinusTwo() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoMinusTwo(), "vlad58r",
                 false, false);
     }
@@ -203,8 +215,8 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoMinusFour() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoMinusFour(), "vlad58r",
                 false, false);
     }
@@ -216,8 +228,8 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoMinusSix() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(1990, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", MARRIED,
+                LocalDate.of(1990, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", MARRIED,
                 0, getCorrectEmploymentDtoMinusSix(), "vlad58r",
                 false, false);
     }
@@ -229,8 +241,8 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoMinusThreePlusThree() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", NON_BINARY,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", MARRIED,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", MARRIED,
                 0, getCorrectEmploymentDtoMinusThreePlusThree(), "vlad58r",
                 false, false);
     }
@@ -242,8 +254,8 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoInsurance() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoInsurance(), "vlad58r",
                 true, false);
     }
@@ -255,8 +267,8 @@ public class LoanApplicationRequestUtil {
 
     public static ScoringDataDto getCorrectScoringDataDtoSalaryClient() {
         return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
-                LocalDate.of(2004, 12,22), "1234", "123456",
-                LocalDate.of(2025, 1,25), "Penza", SINGLE,
+                LocalDate.of(2004, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
                 0, getCorrectEmploymentDtoSalaryClient(), "vlad58r",
                 false, true);
     }
@@ -266,5 +278,17 @@ public class LoanApplicationRequestUtil {
                 14, 5);
     }
 
+    public static ScoringDataDto getNotCorrectScoringDataDtoBirthday() {
+        return new ScoringDataDto(valueOf(20000), 12, "Vlad", "Krivonos", MALE,
+                LocalDate.of(2014, 12, 22), "1234", "123456",
+                LocalDate.of(2025, 1, 25), "Penza", SINGLE,
+                0, getNotCorrectEmploymentDtoBirthday(), "vlad58r",
+                false, false);
+    }
 
+    public static EmploymentDto getNotCorrectEmploymentDtoBirthday() {
+        return new EmploymentDto(EMPLOYED, "1234567890", valueOf(80_000), WORKER,
+                14, 5);
+
+    }
 }

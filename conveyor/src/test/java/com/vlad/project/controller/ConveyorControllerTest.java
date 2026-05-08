@@ -1,12 +1,14 @@
 package com.vlad.project.controller;
 
+import com.vlad.project.exception.GlobalControllerExceptionHandler;
+import com.vlad.project.service.CreditService;
+import com.vlad.project.service.LoanApplicationRequestService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import tools.jackson.databind.ObjectMapper;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.vlad.project.service.LoanApplicationRequestServiceImpl;
 
 import static org.springframework.http.MediaType.*;
 import static com.vlad.project.utils.LoanApplicationRequestUtil.*;
@@ -20,11 +22,17 @@ public class ConveyorControllerTest {
     private MockMvc mockMvc;
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
-    private LoanApplicationRequestServiceImpl service;
+    private LoanApplicationRequestService service;
+    @Autowired
+    private CreditService creditService;
+    @Autowired
+    private GlobalControllerExceptionHandler exceptionHandler;
 
     @BeforeEach
     void initMock() {
-        this.mockMvc = standaloneSetup(new ConveyorController(service)).build();
+        this.mockMvc = standaloneSetup(new ConveyorController(service, creditService))
+                .setControllerAdvice(exceptionHandler)
+                .build();
     }
 
     @Test
@@ -107,5 +115,53 @@ public class ConveyorControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
-}
 
+    @Test
+    void checkCalculationApiStatusWithCorrectDto() throws Exception {
+        mockMvc.perform(post("/conveyor/calculation")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(getCorrectScoringDataDto())))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    void checkCalculationApiStatusWithNotCorrectDto() throws Exception{
+        mockMvc.perform(post("/conveyor/calculation")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(getCorrectScoringDataDtoCancel())))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void checkCalculationApiStatusWithNotCorrectTermDto() throws Exception{
+        mockMvc.perform(post("/conveyor/calculation")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(getCorrectScoringDataDtoCancelTerm())))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void checkCalculationApiStatusWithNotCorrectAmountDto() throws Exception{
+        mockMvc.perform(post("/conveyor/calculation")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(getNotCorrectAmountWithCorrectScoringData())))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void checkCalculationApiStatusWithCancelDto() throws Exception{
+        mockMvc.perform(post("/conveyor/calculation")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(getCorrectEmploymentDtoCancelVersionTwo())))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void checkCalculationApiStatusWithNotCorrectBirthdayDto() throws Exception{
+        mockMvc.perform(post("/conveyor/calculation")
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(getNotCorrectScoringDataDtoBirthday())))
+                .andExpect(status().is4xxClientError());
+    }
+
+}

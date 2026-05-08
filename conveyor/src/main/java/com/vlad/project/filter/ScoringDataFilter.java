@@ -18,7 +18,7 @@ public class ScoringDataFilter {
 
     public static void scoringDataValidation(ScoringDataDto employee) {
         Optional.ofNullable(employee)
-                .orElseThrow(() -> new ScoringException("ScoringDataDto не может быть null"));
+                .orElseThrow(() -> new ScoringException("ScoringDataDto не может быть null", "employee is null"));
 
         log.info("Валидируем заемщика работающего на позиции {}, со стажем работы {}," +
                  " желаемая сумма кредита {} на срок {}",
@@ -29,12 +29,12 @@ public class ScoringDataFilter {
 
         Optional.ofNullable(employee.getEmployment().getEmploymentStatus())
                 .filter(status -> !status.equals(EmploymentStatus.UNEMPLOYED))
-                .orElseThrow(() -> new ScoringException("Заемщик должен быть трудоустроен"));
+                .orElseThrow(() -> new ScoringException("Заемщик должен быть трудоустроен", "status"));
 
         BigDecimal salary = employee.getEmployment().getSalary();
         Optional.ofNullable(employee.getAmount())
                 .filter(amount -> amount.compareTo(salary.multiply(valueOf(20))) < 0)
-                .orElseThrow(() -> new ScoringException("Сумма кредита должна быть меньше 20 зарплат"));
+                .orElseThrow(() -> new ScoringException("Сумма кредита должна быть меньше 20 зарплат", "amount"));
 
         Optional.ofNullable(employee.getBirthday())
                 .filter(birthday -> {
@@ -43,15 +43,17 @@ public class ScoringDataFilter {
                             (period.getYears() > 20 && period.getMonths() > 0))
                            && period.getYears() < 60;
                 })
-                .orElseThrow(() -> new ScoringException("Возраст заемщика должен быть от 20 до 60"));
+                .orElseThrow(() -> new ScoringException("Возраст заемщика должен быть от 20 до 60", "birthday"));
 
         Optional.ofNullable(employee.getEmployment().getWorkExperienceTotal())
                 .filter(experienceTotal -> experienceTotal > 12)
-                .orElseThrow(() -> new ScoringException("Общий опыт работы должен быть больше 12 месяцев"));
+                .orElseThrow(() -> new ScoringException("Общий опыт работы должен быть больше 12 месяцев",
+                        "WorkExperienceTotal"));
 
         Optional.ofNullable(employee.getEmployment().getWorkExperienceCurrent())
                 .filter(experienceTotal -> experienceTotal > 3)
-                .orElseThrow(() -> new ScoringException("Текущий опыт работы должен быть больше 3 месяцев"));
+                .orElseThrow(() -> new ScoringException("Текущий опыт работы должен быть больше 3 месяцев",
+                        "WorkExperienceCurrent"));
 
         Optional.ofNullable(employee.getTerm())
                 .filter(term -> term.compareTo(6) > -1)

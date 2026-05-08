@@ -27,32 +27,3 @@ public class ProblemDetailFactory {
 
 
 }
-//    public ProblemDetail create(
-//            HttpStatus status,
-//            String code,
-//            String detail,
-//            HttpServletRequest request
-//    ) {
-//        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(status, detail);
-//        problemDetail.setTitle(status.getReasonPhrase());
-//
-//        if (request != null) {
-//            problemDetail.setInstance(URI.create(request.getRequestURI()));
-//        }
-//
-//        problemDetail.setProperty("code", code);
-//        return problemDetail;
-//    }
-//
-//    public ProblemDetail createValidationProblem(
-//            String code,
-//            String detail,
-//            String field,
-//            HttpServletRequest request
-//    ) {
-//        ProblemDetail problemDetail = create(HttpStatus.BAD_REQUEST, code, detail, request);
-//        if (field != null) {
-//            problemDetail.setProperty("field", field);
-//        }
-//        return problemDetail;
-//    }

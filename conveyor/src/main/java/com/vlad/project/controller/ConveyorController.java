@@ -4,6 +4,7 @@ import com.vlad.project.dto.CreditDto;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
 import com.vlad.project.dto.ScoringDataDto;
+import com.vlad.project.service.CreditService;
 import com.vlad.project.service.LoanApplicationRequestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,6 +33,7 @@ import java.util.List;
 public class ConveyorController {
 
     private final LoanApplicationRequestService loanApplicationRequestService;
+    private final CreditService creditService;
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Список предложений"),
@@ -49,12 +51,22 @@ public class ConveyorController {
         return ResponseEntity.ok(loanApplicationRequestService.generateCreditOffers(loan));
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Список предложений"),
+            @ApiResponse(responseCode = "400", description = "Ошибка в скоринге данных")
+    })
+    @Operation(summary = "Формируем выплаты по кредиту",
+            description = "Получаем данные, проводим их скоринг, подсчитываем общую выплату по кредиту, " +
+                          "ежемесячные платежи, таблицу выплат по кредиту")
     @PostMapping("/calculation")
-    public ResponseEntity<CreditDto> calculation(@RequestBody
+    public ResponseEntity<CreditDto> calculation(@RequestBody @Valid
+                                                @Parameter(name = "Данные заемщика",
+                                                description = "Содержит данные заемщика для скоринга и дальнейшего" +
+                                                              "подсчета выплат по кредиту")
                                                  ScoringDataDto scoringDataDto) {
         log.info("Зашли в метод calculation для генерации кредитных предложений");
 
-        return null;
+        return ResponseEntity.ok(creditService.calculationCreditPayments(scoringDataDto));
     }
 
 
