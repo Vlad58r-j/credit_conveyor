@@ -2,6 +2,7 @@
 conveyor.iml
 conveyor/gradle
 conveyor/.gradle
+**/build
 conveyor/gradlew
 conveyor/gradlew.bat
 conveyor/settings.gradle
