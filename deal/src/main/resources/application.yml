@@ -9,4 +9,6 @@ spring:
       ddl-auto: update
       show-sql: true
       format_sql: true
-  flywaydb:
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
