@@ -1,34 +1,73 @@
 package com.vlad.project.controller;
 
+import com.vlad.project.dto.CreditDto;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
-import com.vlad.project.filter.exception.PreScoringException;
-import com.vlad.project.service.LoanApplicationRequestServiceImpl;
+import com.vlad.project.dto.ScoringDataDto;
+import com.vlad.project.service.CreditService;
+import com.vlad.project.service.LoanApplicationRequestService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+@Slf4j
+@Validated
 @Controller
-@RequestMapping("/conveyor")
 @RequiredArgsConstructor
+@RequestMapping("/conveyor")
+@Tag(name = "Контроллер для кредитных заявок",
+        description = "Рассчитываем и выводим кредитные заявки и предложения")
 public class ConveyorController {
 
-    private final LoanApplicationRequestServiceImpl loanApplicationRequestService;
+    private final LoanApplicationRequestService loanApplicationRequestService;
+    private final CreditService creditService;
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Список предложений"),
+            @ApiResponse(responseCode = "400", description = "Ошибка в прескоринге данных")
+    })
+    @Operation(summary = "Рассчитываем возможные условия кредита",
+            description = "Приходит заявка на кредит, происходит валидация, " +
+                          "если все условия удовлетворяют, то выводится 4 кредитных предложения")
     @PostMapping("/offers")
-    public ResponseEntity<List<LoanOfferDto>> offers(@RequestBody LoanApplicationRequestDto loan) {
-        return ResponseEntity.ok(loanApplicationRequestService.preScoring(loan));
+    public ResponseEntity<List<LoanOfferDto>> offers(@RequestBody @Valid
+                                                     @Parameter(name = "Заемщик",
+                                                             description = "Содержит все данные о заемщике")
+                                                     LoanApplicationRequestDto loan) {
+        log.info("Зашли в метод offers для генерации кредитных предложений");
+        return ResponseEntity.ok(loanApplicationRequestService.generateCreditOffers(loan));
     }
 
-    @ExceptionHandler(PreScoringException.class)
-    public ResponseEntity<String> exceptionHandler(PreScoringException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Список предложений"),
+            @ApiResponse(responseCode = "400", description = "Ошибка в скоринге данных")
+    })
+    @Operation(summary = "Формируем выплаты по кредиту",
+            description = "Получаем данные, проводим их скоринг, подсчитываем общую выплату по кредиту, " +
+                          "ежемесячные платежи, таблицу выплат по кредиту")
+    @PostMapping("/calculation")
+    public ResponseEntity<CreditDto> calculation(@RequestBody @Valid
+                                                @Parameter(name = "Данные заемщика",
+                                                description = "Содержит данные заемщика для скоринга и дальнейшего" +
+                                                              "подсчета выплат по кредиту")
+                                                 ScoringDataDto scoringDataDto) {
+        log.info("Зашли в метод calculation для генерации кредитных предложений");
+
+        return ResponseEntity.ok(creditService.calculationCreditPayments(scoringDataDto));
     }
+
+
 }
