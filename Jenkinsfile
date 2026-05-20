@@ -32,19 +32,19 @@ pipeline {
 		stage('Healthcheck') {
 			steps {
 				sh '''
-                  for i in $(seq 1 30); do
-                    if curl -fsS http://conveyor:8080/v3/api-docs > /dev/null; then
-                      echo "Application is ready"
-                      exit 0
-                    fi
-                    echo "Waiting... $i"
-                    sleep 2
-                  done
+				  for i in $(seq 1 30); do
+					if curl -fsS http://172.17.0.1:8080/v3/api-docs > /dev/null; then
+					  echo "Application is ready"
+					  exit 0
+					fi
+					echo "Waiting... $i"
+					sleep 2
+				  done
 
-                  echo "Application did not become ready"
-                  docker logs conveyor --tail=100
-                  exit 1
-                '''
+				  echo "Application did not become ready"
+				  docker logs conveyor --tail=100
+				  exit 1
+				'''
 			}
 		}
 	}
