@@ -25,7 +25,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker compose up -d conveyor postgres'
+                sh 'docker compose up -d conveyor'
             }
         }
 
