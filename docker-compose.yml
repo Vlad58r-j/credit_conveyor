@@ -2,11 +2,26 @@ services:
   conveyor:
     build:
       context: ./conveyor
-
     image: conveyor:1.0
     container_name: conveyor
-
     ports:
       - "8080:8080"
-
     restart: unless-stopped
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17
+    container_name: conveyor-postgres
+    environment:
+      POSTGRES_DB: conveyor_db
+      POSTGRES_USER: conveyor_user
+      POSTGRES_PASSWORD: conveyor_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - conveyor-postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  conveyor-postgres-data:
