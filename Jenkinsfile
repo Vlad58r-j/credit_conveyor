@@ -11,6 +11,7 @@ pipeline {
         stage('Build JAR') {
             steps {
                 dir('conveyor') {
+                    sh 'chmod +x ./gradlew'
                     sh './gradlew clean bootJar -x test'
                 }
             }
