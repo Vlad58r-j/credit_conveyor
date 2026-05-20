@@ -1,5 +1,8 @@
 services:
   conveyor:
+    build:
+      context: ./conveyor
+
     image: conveyor:1.0
     container_name: conveyor
 
