@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: conveyor-ingress
+  namespace: credit-conveyor
+spec:
+  rules:
+    - host: conveyor.k3s.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: conveyor
+                port:
+                  number: 8080
