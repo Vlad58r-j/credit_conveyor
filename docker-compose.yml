@@ -3,7 +3,6 @@ services:
     build:
       context: ./conveyor
     image: conveyor:1.0
-    container_name: conveyor
     env_file:
       - .env
     ports:
@@ -16,7 +15,6 @@ services:
 
   postgres:
     image: postgres:17
-    container_name: conveyor-postgres
     profiles:
       - dev
     env_file:
