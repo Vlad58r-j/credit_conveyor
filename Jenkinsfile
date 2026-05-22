@@ -10,13 +10,13 @@ pipeline {
 
 		stage('Build Docker image') {
 			steps {
-				sh 'docker build -t conveyor:1.0 ./conveyor'
+				sh 'docker build -t conveyor:${BUILD_NUMBER} ./conveyor'
 			}
 		}
 
 		stage('Import image to k3s') {
 			steps {
-				sh 'docker save conveyor:1.0 | k3s ctr images import -'
+				sh 'docker save conveyor:${BUILD_NUMBER} | k3s ctr images import -'
 			}
 		}
 
@@ -28,8 +28,8 @@ pipeline {
                   kubectl apply -f k8s/secret.yml
                   kubectl apply -f k8s/postgres.yml
                   kubectl apply -f k8s/conveyor.yml
+                  kubectl set image deployment/conveyor conveyor=conveyor:${BUILD_NUMBER} -n credit-conveyor
                   kubectl apply -f k8s/ingress.yml
-                  kubectl rollout restart deployment/conveyor -n credit-conveyor
                 '''
 			}
 		}
