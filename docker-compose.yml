@@ -12,6 +12,8 @@ services:
       - postgres
     mem_limit: 512m
     cpus: "1.0"
+    networks:
+      - conveyor_network
 
   postgres:
     image: postgres:17
@@ -26,6 +28,10 @@ services:
     restart: unless-stopped
     mem_limit: 512m
     cpus: "1.0"
+    networks:
+      - conveyor_network
+networks:
+  conveyor_network:
 
 volumes:
   conveyor-postgres-data:
