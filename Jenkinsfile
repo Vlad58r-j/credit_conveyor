@@ -10,13 +10,13 @@ pipeline {
 
 		stage('Build Docker image') {
 			steps {
-				sh 'docker compose build conveyor'
+				sh 'docker compose --profile dev build conveyor'
 			}
 		}
 
 		stage('Deploy') {
 			steps {
-				sh 'docker compose up -d conveyor'
+				sh 'docker compose --profile dev up -d conveyor'
 			}
 		}
 

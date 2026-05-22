@@ -17,6 +17,8 @@ services:
   postgres:
     image: postgres:17
     container_name: conveyor-postgres
+    profiles:
+      - dev
     env_file:
       - .env
     ports:
