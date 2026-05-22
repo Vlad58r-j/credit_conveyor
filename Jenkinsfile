@@ -8,15 +8,6 @@ pipeline {
 			}
 		}
 
-		stage('Build JAR') {
-			steps {
-				dir('conveyor') {
-					sh 'chmod +x ./gradlew'
-					sh './gradlew clean bootJar -x test'
-				}
-			}
-		}
-
 		stage('Build Docker image') {
 			steps {
 				sh 'docker compose build conveyor'
@@ -44,7 +35,7 @@ pipeline {
 				  echo "Application did not become ready"
 				  docker logs conveyor --tail=100
 				  exit 1
-        '''
+        		'''
 			}
 		}
 	}
