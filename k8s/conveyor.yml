@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conveyor
+  namespace: credit-conveyor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: conveyor
+  template:
+    metadata:
+      labels:
+        app: conveyor
+    spec:
+      containers:
+        - name: conveyor
+          image: conveyor:1.0
+
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8080
+
+          envFrom:
+            - configMapRef:
+                name: conveyor-config
+
+            - secretRef:
+                name: conveyor-secret
+
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conveyor
+  namespace: credit-conveyor
+spec:
+  selector:
+    app: conveyor
+
+  ports:
+    - port: 8080
+      targetPort: 8080
