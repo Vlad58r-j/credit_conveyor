@@ -77,23 +77,16 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
     public BigDecimal monthlyPaymentCounter(BigDecimal amount, Integer term,
                                                    BigDecimal rate, Boolean isInsurance,
                                                    Boolean salaryClient) {
-        BigDecimal newRate = rate;
-        BigDecimal insurance = amount;
-
-        if (isInsurance) {
-            newRate = newRate.subtract(valueOf(3));
-
-            var insurancePrice = amount.multiply(valueOf(0.01)).multiply(valueOf(term));
-            insurance = insurancePrice.add(insurance);
-            log.info("При наличии страховки ставка уменьшается на 3 и становится = {}," +
-                     " сумма кредита увеличивается на 15% и становится = {}", newRate, insurance);
+        if (isInsurance){
+            rate = rate.subtract(valueOf(3));
+            log.info("При наличии страховки ставка уменьшается на 3% и становится = {}", rate);
         }
         if (salaryClient) {
-            newRate = newRate.subtract(ONE);
-            log.info("У зарплатных клиентов ставка уменьшается на 1% и становится = {}", newRate);
+            rate = rate.subtract(ONE);
+            log.info("У зарплатных клиентов ставка уменьшается на 1% и становится = {}", rate);
         }
 
-        return MonthlyPaymentCounter.monthlyPaymentCounter(newRate, term, insurance, isInsurance);
+        return MonthlyPaymentCounter.monthlyPaymentCounter(rate, term, amount, isInsurance);
     }
 
     public BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance,
