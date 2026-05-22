@@ -10,32 +10,36 @@ pipeline {
 
 		stage('Build Docker image') {
 			steps {
-				sh 'docker compose --profile dev build conveyor'
+				sh 'docker build -t conveyor:1.0 ./conveyor'
 			}
 		}
 
-		stage('Deploy') {
+		stage('Import image to k3s') {
 			steps {
-				sh 'docker compose --profile dev up -d conveyor'
+				sh 'docker save conveyor:1.0 | k3s ctr images import -'
+			}
+		}
+
+		stage('Deploy to Kubernetes') {
+			steps {
+				sh '''
+                  kubectl apply -f k8s/namespace.yml
+                  kubectl apply -f k8s/configmap.yml
+                  kubectl apply -f k8s/secret.yml
+                  kubectl apply -f k8s/postgres.yml
+                  kubectl apply -f k8s/conveyor.yml
+                  kubectl apply -f k8s/ingress.yml
+                  kubectl rollout restart deployment/conveyor -n credit-conveyor
+                '''
 			}
 		}
 
 		stage('Healthcheck') {
 			steps {
 				sh '''
-				  for i in $(seq 1 30); do
-					if curl -fsS http://172.17.0.1:8080/actuator/health; then
-					  echo "Application is ready"
-					  exit 0
-					fi
-					echo "Waiting... $i"
-					sleep 2
-				  done
-
-				  echo "Application did not become ready"
-				  docker logs conveyor --tail=100
-				  exit 1
-        		'''
+                  kubectl rollout status deployment/conveyor -n credit-conveyor --timeout=120s
+                  kubectl get pods -n credit-conveyor
+                '''
 			}
 		}
 	}
