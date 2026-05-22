@@ -14,6 +14,8 @@ services:
     cpus: "1.0"
     networks:
       - conveyor_network
+    volumes:
+      - conveyor-data:/app/data
 
   postgres:
     image: postgres:17
@@ -35,3 +37,4 @@ networks:
 
 volumes:
   conveyor-postgres-data:
+  conveyor-data:
