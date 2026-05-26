@@ -22,13 +22,16 @@ import static java.math.BigDecimal.*;
 @RequiredArgsConstructor
 public class LoanApplicationRequestServiceImpl implements LoanApplicationRequestService {
 
+    public static final int MIN_CREDIT_AMOUNT = 10_000;
+    public static final int MIN_CREDIT_TERM = 6;
+    public static final BigDecimal MINUS_RATE_FOR_INSURANCE_CLIENT = valueOf(3);
+    public static final BigDecimal MINUS_RATE_FOR_SALARY_CLIENT = valueOf(1);
+    public static Long ID_OFFER = 1L;
     private final RateProperties rateConfiguration;
-    private static Long applicationId;
 
     @Override
     public List<LoanOfferDto> generateCreditOffers(LoanApplicationRequestDto loan) {
         loanDtoValidation(loan);
-        applicationId = 1L;
         var currentRate = rateConfiguration.rate();
         var userAmount = loan.getAmount();
         var userTerm = loan.getTerm();
@@ -66,27 +69,20 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
                 .orElseThrow(() -> new PreScoringException("LoanDto не может быть null"));
 
         Optional.ofNullable(loan.getTerm())
-                .filter(term -> term.compareTo(6) > -1)
+                .filter(term -> term.compareTo(MIN_CREDIT_TERM) > -1)
                 .orElseThrow(() -> new PreScoringException("Минимальный срок кредита"));
 
         Optional.ofNullable(loan.getAmount())
-                .filter(amount -> amount.compareTo(new BigDecimal(10_000)) > -1)
+                .filter(amount -> amount.compareTo(new BigDecimal(MIN_CREDIT_AMOUNT)) > -1)
                 .orElseThrow(() -> new PreScoringException("Некорректная сумма кредита"));
     }
 
     public BigDecimal monthlyPaymentCounter(BigDecimal amount, Integer term,
-                                                   BigDecimal rate, Boolean isInsurance,
-                                                   Boolean salaryClient) {
-        if (isInsurance){
-            rate = rate.subtract(valueOf(3));
-            log.info("При наличии страховки ставка уменьшается на 3% и становится = {}", rate);
-        }
-        if (salaryClient) {
-            rate = rate.subtract(ONE);
-            log.info("У зарплатных клиентов ставка уменьшается на 1% и становится = {}", rate);
-        }
+                                            BigDecimal rate, Boolean isInsurance,
+                                            Boolean salaryClient) {
 
-        return MonthlyPaymentCounter.monthlyPaymentCounter(rate, term, amount, isInsurance);
+        BigDecimal currentRate = getRate(rate, isInsurance, salaryClient);
+        return MonthlyPaymentCounter.monthlyPaymentCounter(currentRate, term, amount, isInsurance);
     }
 
     public BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance,
@@ -95,12 +91,18 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
     }
 
     private Long generateApplicationId() {
-        return applicationId++;
+        return ID_OFFER++;
     }
 
     private BigDecimal getRate(BigDecimal currentRate, Boolean isInsurance, Boolean salaryClient) {
-        if (isInsurance) currentRate = currentRate.subtract(valueOf(3));
-        if (salaryClient) currentRate = currentRate.subtract(valueOf(1));
+        if (isInsurance) {
+            currentRate = currentRate.subtract(LoanApplicationRequestServiceImpl.MINUS_RATE_FOR_INSURANCE_CLIENT);
+            log.info("При наличии страховки ставка уменьшается на 3% и становится = {}", currentRate);
+        }
+        if (salaryClient) {
+            currentRate = currentRate.subtract(MINUS_RATE_FOR_SALARY_CLIENT);
+            log.info("У зарплатных клиентов ставка уменьшается на 1% и становится = {}", currentRate);
+        }
 
         return currentRate;
     }
