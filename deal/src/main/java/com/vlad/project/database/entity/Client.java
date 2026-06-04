@@ -21,10 +21,15 @@ public class Client implements BaseEntity<Long>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "last_name")
     private String lastname;
+
+    @Column(name = "first_name")
     private String firstname;
     private String middleName;
     private LocalDate birthDate;
+
+    @Column(unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)

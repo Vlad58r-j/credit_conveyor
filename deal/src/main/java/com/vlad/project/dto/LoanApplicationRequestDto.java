@@ -1,13 +1,14 @@
 package com.vlad.project.dto;
 
-import lombok.Value;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Value
+@Data
 public class LoanApplicationRequestDto {
 
+    Long id;
     BigDecimal amount;
     Integer term;
     String firstName;
