@@ -26,7 +26,6 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
     public static final int MIN_CREDIT_TERM = 6;
     public static final BigDecimal MINUS_RATE_FOR_INSURANCE_CLIENT = valueOf(3);
     public static final BigDecimal MINUS_RATE_FOR_SALARY_CLIENT = valueOf(1);
-    public static Long ID_OFFER = 1L;
     private final RateProperties rateConfiguration;
 
     @Override
@@ -38,23 +37,23 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
 
         log.info("Генерируем 4 кредитных предложения");
 
-        var firstOffer = new LoanOfferDto(generateApplicationId(), userAmount,
+        var firstOffer = new LoanOfferDto(loan.getId(), userAmount,
                 amountCounter(userAmount, userTerm, currentRate, false, false), userTerm,
                 monthlyPaymentCounter(userAmount, userTerm, currentRate, false, false),
                 getRate(currentRate, false, false), false, false);
 
-        var secondOffer = new LoanOfferDto(generateApplicationId(), userAmount,
+        var secondOffer = new LoanOfferDto(loan.getId(), userAmount,
                 amountCounter(userAmount, userTerm, currentRate, false, true),
                 userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, false, true),
                 getRate(currentRate, false, true), false, true);
 
 
-        var thirdOffer = new LoanOfferDto(generateApplicationId(), userAmount,
+        var thirdOffer = new LoanOfferDto(loan.getId(), userAmount,
                 amountCounter(userAmount, userTerm, currentRate, true, false),
                 userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, true, false),
                 getRate(currentRate, true, false), true, false);
 
-        var fourthOffer = new LoanOfferDto(generateApplicationId(), userAmount,
+        var fourthOffer = new LoanOfferDto(loan.getId(), userAmount,
                 amountCounter(userAmount, userTerm, currentRate, true, true),
                 userTerm, monthlyPaymentCounter(userAmount, userTerm, currentRate, true, true),
                 getRate(currentRate, true, true), true, true);
@@ -88,10 +87,6 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
     public BigDecimal amountCounter(BigDecimal amount, Integer term, BigDecimal rate, Boolean isInsurance,
                                     Boolean salaryClient) {
         return monthlyPaymentCounter(amount, term, rate, isInsurance, salaryClient).multiply(valueOf(term));
-    }
-
-    private Long generateApplicationId() {
-        return ID_OFFER++;
     }
 
     private BigDecimal getRate(BigDecimal currentRate, Boolean isInsurance, Boolean salaryClient) {
