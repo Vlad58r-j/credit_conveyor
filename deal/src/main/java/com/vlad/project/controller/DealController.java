@@ -1,6 +1,5 @@
 package com.vlad.project.controller;
 
-import com.vlad.project.database.entity.Application;
 import com.vlad.project.dto.FinishRegistrationRequestDTO;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
@@ -30,10 +29,8 @@ public class DealController {
             description = "Данные о заемщики")
                                                           LoanApplicationRequestDto requestDto) {
         log.info("Зашли в метод API deal/application");
-        Application application = loanApplicationRequestService.createClientAndApplication(requestDto);
-        requestDto.setId(application.getId());
-        List<LoanOfferDto> offers = loanApplicationRequestService.getOffers(requestDto);
-        return ResponseEntity.ok(offers);
+
+        return ResponseEntity.ok(loanApplicationRequestService.createClientAndApplication(requestDto));
     }
 
     @PutMapping("/offer")

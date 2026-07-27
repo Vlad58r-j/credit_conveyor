@@ -25,12 +25,22 @@ public class LoanApplicationRequestServiceImpl implements LoanApplicationRequest
     private final HttpConveyorClient applicationToOfferClient;
 
     @Override
-    @Transactional
-    public Application createClientAndApplication(LoanApplicationRequestDto dto) {
-        Application application = createApplication(dto);
+    @Transactional(rollbackFor = CreateApplicationException.class)
+    public List<LoanOfferDto> createClientAndApplication(LoanApplicationRequestDto dto) {
+        List<LoanOfferDto> offers;
+        Application application;
+
+        try {
+            application = createApplication(dto);
+            dto.setId(application.getId());
+
+            offers = getOffers(dto);
+        } catch (Exception exception) {
+            throw new CreateApplicationException("Кредитное данные не сохранены");
+        }
 
         log.info("Сохранили клиента и кредитные данные в бд");
-        return application;
+        return offers;
     }
 
     private Application createApplication(LoanApplicationRequestDto dto) {

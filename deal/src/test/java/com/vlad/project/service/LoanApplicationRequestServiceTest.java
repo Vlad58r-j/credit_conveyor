@@ -4,6 +4,7 @@ import com.vlad.project.database.entity.Application;
 import com.vlad.project.database.entity.Client;
 import com.vlad.project.database.repository.ApplicationRepository;
 import com.vlad.project.dto.LoanApplicationRequestDto;
+import com.vlad.project.dto.LoanOfferDto;
 import com.vlad.project.dto.enumStatus.ApplicationStatus;
 import com.vlad.project.dto.enumStatus.Gender;
 import com.vlad.project.mapper.ApplicationEditMapper;
@@ -11,12 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import static com.vlad.project.utils.LoanApplicationRequestTestUtil.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.vlad.project.utils.LoanApplicationRequestTestUtil.getCorrectLoanApplicationDto;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -29,12 +32,13 @@ public class LoanApplicationRequestServiceTest {
     @Mock
     private ApplicationEditMapper applicationEditMapper;
 
+    @Spy
     @InjectMocks
     private LoanApplicationRequestServiceImpl service;
 
     @Test
     void checkCreateClientAndApplication() {
-        LoanApplicationRequestDto dto = correctLoanApplicationDto;
+        LoanApplicationRequestDto dto = getCorrectLoanApplicationDto();
 
         Application saveApplication = Application.builder()
                 .client(Client.builder()
@@ -55,10 +59,9 @@ public class LoanApplicationRequestServiceTest {
         when(repository.save(saveApplication))
                 .thenReturn(saveApplication);
 
-        Application applicationResult = service.createClientAndApplication(dto);
+        List<LoanOfferDto> applicationResult = service.createClientAndApplication(dto);
 
         assertNotNull(applicationResult);
-        assertEquals(saveApplication.getClient(), applicationResult.getClient());
 
         verify(repository, times(1)).save(any(Application.class));
     }

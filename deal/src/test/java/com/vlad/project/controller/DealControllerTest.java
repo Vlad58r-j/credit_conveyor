@@ -1,6 +1,5 @@
 package com.vlad.project.controller;
 
-import com.vlad.project.database.entity.Application;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
 import com.vlad.project.exception.GlobalExceptionHandler;
@@ -45,9 +44,7 @@ class DealControllerTest {
         LoanOfferDto offerDto = new LoanOfferDto(1L, null, null, null,
                 null, null, null, null);
 
-        Application application = Application.builder()
-                .id(1L)
-                .build();
+        List<LoanOfferDto> application = getCorrectLoanOfferDto();
 
         when(loanApplicationService.getOffers(any()))
                 .thenReturn(List.of(offerDto));
@@ -57,7 +54,7 @@ class DealControllerTest {
 
         mockMvc.perform(post("/deal/application")
                         .contentType(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(correctLoanApplicationDto)))
+                        .content(objectMapper.writeValueAsString(getCorrectLoanApplicationDto())))
                 .andExpect(status().is2xxSuccessful());
     }
 
