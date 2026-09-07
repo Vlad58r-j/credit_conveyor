@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,8 +35,12 @@ public class Application implements BaseEntity<Long> {
     private ApplicationStatus status;
 
     private LocalDate creationDate;
-    private String appliedOffer;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    private AppliedOffer appliedOffer;
     private LocalDate signDate;
     private String sesCode;
+
+    @Enumerated(value = EnumType.STRING)
     private List<ApplicationStatus> statusHistory;
 }

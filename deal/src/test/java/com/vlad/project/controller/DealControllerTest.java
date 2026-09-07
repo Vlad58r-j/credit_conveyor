@@ -34,7 +34,7 @@ class DealControllerTest {
 
     @BeforeEach
     void initMock() {
-        this.mockMvc = standaloneSetup(new DealController(loanApplicationService))
+        this.mockMvc = standaloneSetup(new DealController(loanApplicationService,null))
                 .setControllerAdvice(exceptionHandler)
                 .build();
     }

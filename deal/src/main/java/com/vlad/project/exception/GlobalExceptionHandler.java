@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -72,6 +73,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = DataIntegrityViolationException.class)
     public ResponseEntity<ProblemDetail> dataBaseSaveException(DataIntegrityViolationException ex,
+                                                            HttpServletRequest request) {
+        log.error("Произошло исключение -> {}; вызвался метод -> dataBaseSaveException", ex.getClass());
+
+        ProblemDetail problemDetail = problemDetailFacrory.detailFactory(
+                HttpStatus.BAD_REQUEST,
+                DB_SAVE_EXCEPTION,
+                request);
+
+        return ResponseEntity.badRequest().body(problemDetail);
+    }
+
+    @ExceptionHandler(value = InvalidDataAccessApiUsageException.class)
+    public ResponseEntity<ProblemDetail> dataBaseUpdateException(InvalidDataAccessApiUsageException ex,
                                                             HttpServletRequest request) {
         log.error("Произошло исключение -> {}; вызвался метод -> dataBaseSaveException", ex.getClass());
 
