@@ -8,43 +8,38 @@ pipeline {
 			}
 		}
 
-		stage('Build JAR') {
-			steps {
-				dir('conveyor') {
-					sh 'chmod +x ./gradlew'
-					sh './gradlew clean bootJar -x test'
-				}
-			}
-		}
-
 		stage('Build Docker image') {
 			steps {
-				sh 'docker compose build conveyor'
+				sh 'docker build -t conveyor:${BUILD_NUMBER} ./conveyor'
 			}
 		}
 
-		stage('Deploy') {
+		stage('Import image to k3s') {
 			steps {
-				sh 'docker compose up -d conveyor'
+				sh 'docker save conveyor:${BUILD_NUMBER} | k3s ctr images import -'
+			}
+		}
+
+		stage('Deploy to Kubernetes') {
+			steps {
+				sh '''
+                  kubectl apply -f k8s/namespace.yml
+                  kubectl apply -f k8s/configmap.yml
+                  kubectl apply -f k8s/secret.yml
+                  kubectl apply -f k8s/postgres.yml
+                  kubectl apply -f k8s/conveyor.yml
+                  kubectl set image deployment/conveyor conveyor=conveyor:${BUILD_NUMBER} -n credit-conveyor
+                  kubectl apply -f k8s/ingress.yml
+                '''
 			}
 		}
 
 		stage('Healthcheck') {
 			steps {
 				sh '''
-				  for i in $(seq 1 30); do
-					if curl -fsS http://172.17.0.1:8080/actuator/health; then
-					  echo "Application is ready"
-					  exit 0
-					fi
-					echo "Waiting... $i"
-					sleep 2
-				  done
-
-				  echo "Application did not become ready"
-				  docker logs conveyor --tail=100
-				  exit 1
-        '''
+                  kubectl rollout status deployment/conveyor -n credit-conveyor --timeout=120s
+                  kubectl get pods -n credit-conveyor
+                '''
 			}
 		}
 	}
