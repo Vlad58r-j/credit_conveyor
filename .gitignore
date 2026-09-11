@@ -16,3 +16,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+data/
+kafka_server_jaas.conf/
+zoo1/
