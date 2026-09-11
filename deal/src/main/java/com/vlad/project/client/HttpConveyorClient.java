@@ -1,7 +1,9 @@
 package com.vlad.project.client;
 
+import com.vlad.project.dto.CreditDto;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
+import com.vlad.project.dto.ScoringDataDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.service.annotation.HttpExchange;
 import org.springframework.web.service.annotation.PostExchange;
@@ -13,4 +15,7 @@ public interface HttpConveyorClient {
 
     @PostExchange("conveyor/offers")
     List<LoanOfferDto> getOffers(@RequestBody LoanApplicationRequestDto dto);
+
+    @PostExchange("conveyor/calculation")
+    CreditDto getCredit(@RequestBody ScoringDataDto scoringDataDto);
 }

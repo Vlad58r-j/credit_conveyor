@@ -4,6 +4,7 @@ import com.vlad.project.dto.FinishRegistrationRequestDTO;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
 import com.vlad.project.service.ApplicationService;
+import com.vlad.project.service.CreditService;
 import com.vlad.project.service.LoanApplicationRequestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,6 +24,7 @@ public class DealController {
 
     private final LoanApplicationRequestService loanApplicationRequestService;
     private final ApplicationService applicationService;
+    private final CreditService creditService;
 
     @PostMapping("/application")
     @Operation(summary = "Расчитываем возможные условия кредита", description = """
@@ -41,7 +43,7 @@ public class DealController {
             Приходит запрос состоящий из LoanOfferDto, достаем запись из бд по applicationId,
             обновляем статус записи и сохраняем изменения в бд""")
     public ResponseEntity<Void> offer(@RequestBody
-                                      @Parameter(name = "Кредит", description = "Кредитное предложение")
+                                          @Parameter(name = "Кредит", description = "Кредитное предложение")
                                       LoanOfferDto requestDto) {
         log.info("Вызван deal/offer API");
         boolean resultMethodOfferService = applicationService.updateApplication(requestDto);
@@ -57,8 +59,17 @@ public class DealController {
     }
 
     @PutMapping("/calculate/{applicationId}")
-    public void calculateId(FinishRegistrationRequestDTO requestDto,
-                            @RequestParam Long applicationId) {
+    @Operation(summary = "Завершение регистрации и полный подсчёт кредита", description = """
+            По API приходит FinishRegistrationRequestDTO и applicationId, достается из бд заявка,
+            после ScoringDataDTO насыщается данными и отправляется /conveyor/calculation,
+            на основе вернувшихся с другого API данных в бд сохраняется сущность Credit и обновляются
+            данные в Application""")
+    public ResponseEntity<Void> calculateId(FinishRegistrationRequestDTO requestDto,
+                                            @PathVariable Long applicationId) {
+        log.info("Вызван deal/calculate/{applicationId} API");
+        creditService.addDataToScoringDto(requestDto, applicationId);
+
+        return ResponseEntity.ok().build();
     }
 
 

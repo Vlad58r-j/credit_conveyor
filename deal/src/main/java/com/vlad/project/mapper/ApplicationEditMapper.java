@@ -2,6 +2,7 @@ package com.vlad.project.mapper;
 
 import com.vlad.project.database.entity.Application;
 import com.vlad.project.database.entity.Client;
+import com.vlad.project.database.entity.Passport;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.enumStatus.ApplicationStatus;
 import com.vlad.project.dto.enumStatus.Gender;
@@ -34,6 +35,10 @@ public class ApplicationEditMapper implements Mapper<LoanApplicationRequestDto, 
                         .middleName(dto.getMiddleName())
                         .birthDate(dto.getBirthdate())
                         .email(dto.getEmail())
+                        .passport(Passport.builder()
+                                .series(dto.getPassportSeries())
+                                .number(dto.getPassportNumber())
+                                .build())
                         .gender(Gender.NON_BINARY)
                 .build());
     }

@@ -25,5 +25,5 @@ public class Passport implements BaseEntity<Long>{
     private String series;
     private String number;
     private LocalDate issueDate;
-    private LocalDate issueBranch;
+    private String issueBranch;
 }

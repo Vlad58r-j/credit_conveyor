@@ -40,11 +40,11 @@ public class Client implements BaseEntity<Long>{
 
     private Integer dependentAmount;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "passport_id")
     private Passport passport;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employment_id")
     private Employment employment;
 }

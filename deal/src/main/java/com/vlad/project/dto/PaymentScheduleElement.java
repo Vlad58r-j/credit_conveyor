@@ -1,17 +1,21 @@
 package com.vlad.project.dto;
 
-import lombok.Value;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Value
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentScheduleElement {
 
-    Integer number;
-    LocalDate date;
-    BigDecimal totalPayment;
-    BigDecimal interestPayment;
-    BigDecimal debtPayment;
-    BigDecimal remainingDebt;
+    private Integer number;
+    private LocalDate date;
+    private BigDecimal totalPayment;
+    private BigDecimal interestPayment;
+    private BigDecimal debtPayment;
+    private BigDecimal remainingDebt;
 }
