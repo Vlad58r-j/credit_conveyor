@@ -15,3 +15,25 @@ deal/settings.gradle
 /zoo1
 /kafka_server_jaas.conf
 /data
+# IDE
+.idea/
+*.iml
+
+# Build output
+**/build/
+**/out/
+
+# Gradle cache
+.gradle/
+**/.gradle/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+.env
+.env.*
+!.env.example
