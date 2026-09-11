@@ -12,3 +12,6 @@ conveyor/settings.gradle
 data/
 kafka_server_jaas.conf/
 zoo1/
+.env
+.env.*
+!.env.example
