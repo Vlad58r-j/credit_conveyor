@@ -2,7 +2,13 @@
 conveyor.iml
 conveyor/gradle
 conveyor/.gradle
-**/build
 conveyor/gradlew
 conveyor/gradlew.bat
 conveyor/settings.gradle
+
+# Logs
+*.log
+
+data/
+kafka_server_jaas.conf/
+zoo1/

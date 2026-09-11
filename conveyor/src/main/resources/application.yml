@@ -8,3 +8,13 @@ server:
 app:
   credit:
     rate: 16
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true

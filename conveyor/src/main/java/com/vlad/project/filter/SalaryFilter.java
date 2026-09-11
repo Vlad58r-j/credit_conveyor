@@ -9,11 +9,13 @@ import static java.math.BigDecimal.*;
 
 public class SalaryFilter implements ConstraintValidator<SalaryValid, ScoringDataDto> {
 
+    public static final java.math.BigDecimal AMOUNT_SALARY_FOR_VALID = valueOf(20);
+
     @Override
     public boolean isValid(ScoringDataDto value, ConstraintValidatorContext context) {
         var salaryEmployee = value.getEmployment().getSalary();
         var amountEmployee = value.getAmount();
-        var max = salaryEmployee.multiply(valueOf(20)).max(amountEmployee);
+        var max = salaryEmployee.multiply(AMOUNT_SALARY_FOR_VALID).max(amountEmployee);
         return max.equals(amountEmployee);
     }
 }

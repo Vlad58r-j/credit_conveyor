@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties.hibernate:
+      ddl-auto: create
+      show-sql: true
+      format_sql: true
+      default_schema: deal
+
+  flyway:
+    schemas: deal
+    default-schema: deal
+    create-schemas: true
+
+server:
+  port: 8081
