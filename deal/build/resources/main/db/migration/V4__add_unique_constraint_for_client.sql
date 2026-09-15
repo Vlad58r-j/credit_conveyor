@@ -1,0 +1,2 @@
+ALTER TABLE client
+ADD UNIQUE(email);
