@@ -6,8 +6,10 @@ import jakarta.validation.ConstraintValidatorContext;
 
 public class WorkExperienceTotalFilter implements ConstraintValidator<WorkExperienceTotalValid, Integer> {
 
+    public static final int MIN_TOTAL_WORK_EXPERIENCE = 12;
+
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext context) {
-        return value > 12;
+        return value > MIN_TOTAL_WORK_EXPERIENCE;
     }
 }

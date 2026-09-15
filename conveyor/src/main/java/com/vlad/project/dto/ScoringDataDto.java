@@ -53,7 +53,7 @@ public class ScoringDataDto {
     String passportNumber;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotBlank(message = "Дата выдачи паспорта не может быть пустой")
+    @NotNull(message = "Дата выдачи паспорта не может быть пустой")
     @Schema(description = "Дата выдачи паспорта", example = "2020-01-23")
     LocalDate passportIssueDate;
 
@@ -61,15 +61,15 @@ public class ScoringDataDto {
     @Schema(description = "Кем выдан паспорт", example = "УМВД")
     String passportIssueBranch;
 
-    @NotBlank(message = "Семейное положение не может быть пустым")
+    @NotNull(message = "Семейное положение не может быть пустым")
     @Schema(description = "Семейное положение", example = "MARRIED")
     MaritalStatus maritalStatus;
 
-    @NotBlank(message = "Застрахованная сумма вклада не может быть пустой")
+    @NotNull(message = "Застрахованная сумма вклада не может быть пустой")
     @Schema(description = "Застрахованная сумма вклада", example = "100000")
     Integer dependentAmount;
 
-    @NotBlank(message = "Данные о трудоустройстве заемщика не могут быть пустыми")
+    @NotNull(message = "Данные о трудоустройстве заемщика не могут быть пустыми")
     @Schema(description = "Данные о трудоустройстве заемщика",
             example = "EMPLOYED; 123456789011; 50000; WORKER; 13; 13")
     EmploymentDto employment;
@@ -78,11 +78,11 @@ public class ScoringDataDto {
     @Schema(description = "Аккаунт заемщика", example = "example")
     String account;
 
-    @NotBlank(message = "Наличие страховки не может быть пустым")
+    @NotNull(message = "Наличие страховки не может быть пустым")
     @Schema(description = "Будет ли страховка или нет", example = "false")
     Boolean isInsuranceEnabled;
 
-    @NotBlank(message = "Зарплатный клиент или нет не может быть пустым")
+    @NotNull(message = "Зарплатный клиент или нет не может быть пустым")
     @Schema(description = "Зарплатные клиент или нет", example = "false")
     Boolean isSalaryClient;
 }
