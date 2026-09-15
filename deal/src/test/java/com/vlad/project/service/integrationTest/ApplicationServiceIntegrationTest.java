@@ -5,13 +5,11 @@ import com.vlad.project.database.entity.Application;
 import com.vlad.project.service.ApplicationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 public class ApplicationServiceIntegrationTest extends IntegrationTestBase {
 
     public static final long CORRECT_APPLICATION_ID = 1L;

@@ -3,10 +3,7 @@ package com.vlad.project.database.entity;
 import com.vlad.project.dto.PaymentScheduleElement;
 import com.vlad.project.dto.enumStatus.CreditStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -16,6 +13,7 @@ import java.util.List;
 @Data
 @Entity
 @Builder
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class Credit implements BaseEntity<Long> {

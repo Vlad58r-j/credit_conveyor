@@ -1,5 +1,6 @@
 package com.vlad.project.service;
 
+import com.vlad.project.client.HttpConveyorClient;
 import com.vlad.project.database.entity.Application;
 import com.vlad.project.database.entity.Client;
 import com.vlad.project.database.repository.ApplicationRepository;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -27,12 +27,12 @@ import static org.mockito.Mockito.*;
 public class LoanApplicationRequestServiceTest {
 
     @Mock
-    private ApplicationRepository repository;
-
+    private ApplicationRepository applicationRepository;
     @Mock
     private ApplicationEditMapper applicationEditMapper;
+    @Mock
+    private HttpConveyorClient applicationToOfferClient;
 
-    @Spy
     @InjectMocks
     private LoanApplicationRequestServiceImpl service;
 
@@ -51,19 +51,19 @@ public class LoanApplicationRequestServiceTest {
                         .build())
                 .status(ApplicationStatus.PREAPPROVAL)
                 .creationDate(LocalDate.now())
-        .build();
+                .build();
 
         when(applicationEditMapper.map(dto))
                 .thenReturn(saveApplication);
 
-        when(repository.save(saveApplication))
+        when(applicationRepository.save(saveApplication))
                 .thenReturn(saveApplication);
 
         List<LoanOfferDto> applicationResult = service.createClientAndApplication(dto);
 
         assertNotNull(applicationResult);
 
-        verify(repository, times(1)).save(any(Application.class));
+        verify(applicationRepository, times(1)).save(any(Application.class));
     }
 
 }

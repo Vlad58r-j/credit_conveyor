@@ -14,11 +14,11 @@ VALUES (1, 'Vlad', 'Krivonos', 'Igorevich', DATE '2004-12-22',
 
 INSERT INTO deal.credit (id, amount, term, monthly_payment, rate, psk, payment_schedule, is_insurance_enabled,
                          is_salary_client, credit_status)
-VALUES (1, 25544,12,2294, 15, 54, 'Text',
+VALUES (2, 25544,12,2294, 15, 54, '[{},{}]',
         true, false, 'CALCULATED');
 
 INSERT INTO deal.application (client_id, credit_id, status, creation_date, applied_offer, sign_date,
                               ses_code, status_history, id)
-VALUES (1, 1, 'PREAPPROVAL',DATE '2025-02-25',
+VALUES (1, 2, 'PREAPPROVAL',DATE '2025-02-25',
         null,
         DATE '2026-09-01', '123456', ARRAY['PREAPPROVAL', 'APPROVED'], 1);

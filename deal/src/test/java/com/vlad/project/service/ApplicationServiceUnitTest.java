@@ -41,7 +41,7 @@ public class ApplicationServiceUnitTest {
 
         verify(repository).save(any(Application.class));
         assertTrue(resultService);
-        assertEquals(ApplicationStatus.CC_APPROVED, application.getStatus());
+        assertEquals(ApplicationStatus.APPROVED, application.getStatus());
         assertEquals(applicationResult().getAppliedOffer(), application.getAppliedOffer());
         assertEquals(applicationResult().getStatusHistory(), application.getStatusHistory());
     }
