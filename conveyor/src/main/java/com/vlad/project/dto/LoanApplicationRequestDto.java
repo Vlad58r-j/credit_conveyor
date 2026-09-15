@@ -1,17 +1,25 @@
 package com.vlad.project.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vlad.project.annotation.Age;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Value
+@Data
+@Builder
+@AllArgsConstructor
 @Schema(description = "Данные пользователя для подачи заявки на кредит")
 public class LoanApplicationRequestDto {
+
+    @JsonProperty("id")
+    Long Id;
 
     @NotNull(message = "Обязательно укажите сумму кредита")
     @Schema(description = "Желаемая сумма кредита", example = "10000")

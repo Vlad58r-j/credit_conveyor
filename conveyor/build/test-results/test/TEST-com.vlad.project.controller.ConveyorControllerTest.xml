@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.vlad.project.controller.ConveyorControllerTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-06-05T09:42:18.723Z" hostname="MacBook-Pro-Vlad.local" time="1.335">
+  <properties/>
+  <testcase name="checkOffersStatusRequestWithNotCorrectTermDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.925"/>
+  <testcase name="checkOffersStatusRequestWithNotCorrectMiddleNameDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.031"/>
+  <testcase name="checkOffersStatusRequestWithNotCorrectEmailDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.029"/>
+  <testcase name="checkOffersStatusRequestWithNotCorrectPassportSeriesDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.021"/>
+  <testcase name="checkCalculationApiStatusWithNotCorrectBirthdayDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.037"/>
+  <testcase name="checkCalculationApiStatusWithCancelDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.026"/>
+  <testcase name="checkOffersStatusRequestWithNotCorrectBirthDateDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.02"/>
+  <testcase name="checkOffersStatusRequestWithNotCorrectPassportNumberDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.021"/>
+  <testcase name="checkCalculationApiStatusWithNotCorrectAmountDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.024"/>
+  <testcase name="checkOffersStatusRequestWithNotCorrectLastNameDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.02"/>
+  <testcase name="checkOffersStatusRequestWithNotCorrectAmountDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.03"/>
+  <testcase name="checkOffersStatusRequestWithNotCorrectNameDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.033"/>
+  <testcase name="checkOffersStatusRequestWithCorrectDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.04"/>
+  <testcase name="checkCalculationApiStatusWithNotCorrectTermDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.025"/>
+  <testcase name="checkCalculationApiStatusWithCorrectDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.019"/>
+  <testcase name="checkCalculationApiStatusWithNotCorrectDto()" classname="com.vlad.project.controller.ConveyorControllerTest" time="0.016"/>
+  <system-out><![CDATA[12:42:16.928 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vlad.project.controller.ConveyorControllerTest]: ConveyorControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:42:17.010 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vlad.project.ConveyorApplication for test class com.vlad.project.controller.ConveyorControllerTest
+12:42:17.056 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vlad.project.controller.ConveyorControllerTest]: ConveyorControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:42:17.057 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vlad.project.ConveyorApplication for test class com.vlad.project.controller.ConveyorControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.4)
+
+2026-06-05T12:42:17.295+03:00  INFO 81065 --- [conveyor] [    Test worker] c.v.p.controller.ConveyorControllerTest  : Starting ConveyorControllerTest using Java 25 with PID 81065 (started by vladkrivonos in /Users/vladkrivonos/IdeaProjects/credit_conveyor/conveyor)
+2026-06-05T12:42:17.296+03:00  INFO 81065 --- [conveyor] [    Test worker] c.v.p.controller.ConveyorControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2026-06-05T12:42:18.629+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-06-05T12:42:18.657+03:00  INFO 81065 --- [conveyor] [    Test worker] c.v.p.controller.ConveyorControllerTest  : Started ConveyorControllerTest in 1.498 seconds (process running for 2.324)
+2026-06-05T12:42:18.712+03:00  WARN 81065 --- [conveyor] [    Test worker] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-06-05T12:42:18.712+03:00  WARN 81065 --- [conveyor] [    Test worker] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-06-05T12:42:19.466+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.466+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.467+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-06-05T12:42:19.613+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.656+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.656+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.656+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.675+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.692+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.692+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.692+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.707+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.719+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.719+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.719+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.729+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.741+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.741+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.741+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.764+03:00  INFO 81065 --- [conveyor] [    Test worker] c.v.p.controller.ConveyorController      : Зашли в метод calculation для генерации кредитных предложений
+2026-06-05T12:42:19.765+03:00  INFO 81065 --- [conveyor] [    Test worker] c.vlad.project.filter.ScoringDataFilter  : Валидируем заемщика работающего на позиции WORKER, со стажем работы 14, желаемая сумма кредита 20000 на срок 12
+2026-06-05T12:42:19.767+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class com.vlad.project.exception.ScoringException; вызвался метод -> scoringExceptionInCalculationApi
+2026-06-05T12:42:19.782+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.782+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.782+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.794+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.809+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.809+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.809+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.817+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.826+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.826+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.827+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-06-05T12:42:19.836+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.855+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.855+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.855+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.864+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.875+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.875+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.875+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.885+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.898+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.899+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.899+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.912+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.928+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.928+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.929+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.945+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:19.965+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:19.965+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:19.966+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:19.973+03:00  INFO 81065 --- [conveyor] [    Test worker] c.v.p.controller.ConveyorController      : Зашли в метод offers для генерации кредитных предложений
+2026-06-05T12:42:19.975+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : Генерируем 4 кредитных предложения
+2026-06-05T12:42:19.977+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : У зарплатных клиентов ставка уменьшается на 1% и становится = 15
+2026-06-05T12:42:19.977+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : У зарплатных клиентов ставка уменьшается на 1% и становится = 15
+2026-06-05T12:42:19.977+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : У зарплатных клиентов ставка уменьшается на 1% и становится = 15
+2026-06-05T12:42:19.977+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : При наличии страховки ставка уменьшается на 3% и становится = 13
+2026-06-05T12:42:19.977+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : При наличии страховки ставка уменьшается на 3% и становится = 13
+2026-06-05T12:42:19.977+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : При наличии страховки ставка уменьшается на 3% и становится = 13
+2026-06-05T12:42:19.978+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : При наличии страховки ставка уменьшается на 3% и становится = 13
+2026-06-05T12:42:19.978+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : У зарплатных клиентов ставка уменьшается на 1% и становится = 12
+2026-06-05T12:42:19.978+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : При наличии страховки ставка уменьшается на 3% и становится = 13
+2026-06-05T12:42:19.978+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : У зарплатных клиентов ставка уменьшается на 1% и становится = 12
+2026-06-05T12:42:19.978+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : При наличии страховки ставка уменьшается на 3% и становится = 13
+2026-06-05T12:42:19.978+03:00  INFO 81065 --- [conveyor] [    Test worker] .v.p.s.LoanApplicationRequestServiceImpl : У зарплатных клиентов ставка уменьшается на 1% и становится = 12
+2026-06-05T12:42:20.002+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:20.002+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:20.002+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:20.018+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class org.springframework.web.bind.MethodArgumentNotValidException; вызвался метод -> showMethodArgumentNotValid
+2026-06-05T12:42:20.028+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:20.028+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:20.028+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:20.036+03:00  INFO 81065 --- [conveyor] [    Test worker] c.v.p.controller.ConveyorController      : Зашли в метод calculation для генерации кредитных предложений
+2026-06-05T12:42:20.036+03:00  INFO 81065 --- [conveyor] [    Test worker] c.vlad.project.filter.ScoringDataFilter  : Валидируем заемщика работающего на позиции WORKER, со стажем работы 14, желаемая сумма кредита 20000 на срок 12
+2026-06-05T12:42:20.048+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-06-05T12:42:20.049+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-05T12:42:20.049+03:00  INFO 81065 --- [conveyor] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-05T12:42:20.055+03:00  INFO 81065 --- [conveyor] [    Test worker] c.v.p.controller.ConveyorController      : Зашли в метод calculation для генерации кредитных предложений
+2026-06-05T12:42:20.055+03:00  INFO 81065 --- [conveyor] [    Test worker] c.vlad.project.filter.ScoringDataFilter  : Валидируем заемщика работающего на позиции null, со стажем работы 14, желаемая сумма кредита 20000 на срок 12
+2026-06-05T12:42:20.056+03:00 ERROR 81065 --- [conveyor] [    Test worker] c.v.p.e.GlobalControllerExceptionHandler : Произошло исключение -> class com.vlad.project.exception.ScoringException; вызвался метод -> scoringExceptionInCalculationApi
+]]></system-out>
+  <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/Users/vladkrivonos/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.17.8/f09415827a71be7ed621c7bd02550678f28bc81c/byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

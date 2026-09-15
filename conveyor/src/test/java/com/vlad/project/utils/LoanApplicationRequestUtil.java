@@ -15,84 +15,145 @@ import static java.math.BigDecimal.valueOf;
 public class LoanApplicationRequestUtil {
 
     public static LoanApplicationRequestDto getCorrectLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(200000), 12,
-                "Vlad", "Krivonos", "Igorevich",
-                "vlad58r@gmail.com", LocalDate.of(2004, 12, 22),
-                "1111", "222234");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(20000))
+                .term(12)
+                .firstName("Vlad")
+                .lastName("Krivonos")
+                .middleName("Igorevich")
+                .email("vlad58r@gmail.com")
+                .birthdate(LocalDate.of(2004, 12, 22))
+                .passportSeries("1111")
+                .passportNumber("222234")
+                .build();
+
     }
 
     public static LoanApplicationRequestDto getNotCorrectAmountLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(20), 12,
-                "Vlad", "Krivonos", "Igorevich",
-                "vlad58r@gmail.com", LocalDate.of(2004, 12, 22),
-                "1111", "222234");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(200))
+                .term(12)
+                .firstName("Vlad")
+                .lastName("Krivonos")
+                .middleName("Igorevich")
+                .email("vlad58r@gmail.com")
+                .birthdate(LocalDate.of(2004, 12, 22))
+                .passportSeries("1111")
+                .passportNumber("222234")
+                .build();
     }
 
     public static LoanApplicationRequestDto getNotCorrectTermLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(200000), null,
-                "Vlad", "Krivonos", "Igorevich",
-                "vlad58r@gmail.com", LocalDate.of(2004, 12, 22),
-                "1111", "222234");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(20000))
+                .term(null)
+                .firstName("Vlad")
+                .lastName("Krivonos")
+                .middleName("Igorevich")
+                .email("vlad58r@gmail.com")
+                .birthdate(LocalDate.of(2004, 12, 22))
+                .passportSeries("1111")
+                .passportNumber("222234")
+                .build();
     }
 
 
     public static LoanApplicationRequestDto getNotCorrectNameLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(200000), 12,
-                "V", "Krivonos", "Igorevich",
-                "vlad58r@gmail.com", LocalDate.of(2004, 12, 22),
-                "1111", "222234");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(20000))
+                .term(12)
+                .firstName("V")
+                .lastName("Krivonos")
+                .middleName("Igorevich")
+                .email("vlad58r@gmail.com")
+                .birthdate(LocalDate.of(2004, 12, 22))
+                .passportSeries("1111")
+                .passportNumber("222234")
+                .build();
     }
 
     public static LoanApplicationRequestDto getNotCorrectLastNameLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(200000), 12,
-                "Vlad", "K", "Igorevich",
-                "vlad58r@gmail.com", LocalDate.of(2004, 12, 22),
-                "1111", "222234");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(20000))
+                .term(12)
+                .firstName("Vlad")
+                .lastName("K")
+                .middleName("Igorevich")
+                .email("vlad58r@gmail.com")
+                .birthdate(LocalDate.of(2004, 12, 22))
+                .passportSeries("1111")
+                .passportNumber("222234")
+                .build();
     }
 
     public static LoanApplicationRequestDto getNotCorrectMidleNameLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(200000), 12,
-                "Vlad", "Krivonos", "I",
-                "vlad58r@gmail.com", LocalDate.of(2004, 12, 22),
-                "1111", "222234");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(20000))
+                .term(12)
+                .firstName("Vlad")
+                .lastName("Krivonos")
+                .middleName("I")
+                .email("vlad58r@gmail.com")
+                .birthdate(LocalDate.of(2004, 12, 22))
+                .passportSeries("1111")
+                .passportNumber("222234")
+                .build();
     }
 
     public static LoanApplicationRequestDto getNotCorrectEmailLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(200000), 12,
-                "Vlad", "Krivonos", "I",
-                "vlad58rgmail.com", LocalDate.of(2004, 12, 22),
-                "1111", "222234");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(20000))
+                .term(12)
+                .firstName("Vlad")
+                .lastName("Krivonos")
+                .middleName("Igorevich")
+                .email("vlad58rgmail.com")
+                .birthdate(LocalDate.of(2004, 12, 22))
+                .passportSeries("1111")
+                .passportNumber("222234")
+                .build();
     }
 
     public static LoanApplicationRequestDto getNotCorrectBirthdateLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(200000), 12,
-                "Vlad", "Krivonos", "I",
-                "vlad58r@gmail.com", LocalDate.of(2024, 12, 22),
-                "1111", "222234");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(20000))
+                .term(12)
+                .firstName("Vlad")
+                .lastName("Krivonos")
+                .middleName("Igorevich")
+                .email("vlad58r@gmail.com")
+                .birthdate(LocalDate.of(2024, 12, 22))
+                .passportSeries("1111")
+                .passportNumber("222234")
+                .build();
     }
 
     public static LoanApplicationRequestDto getNotCorrectPassportSeriesLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(200000), 12,
-                "Vlad", "Krivonos", "I",
-                "vlad58rgmail.com", LocalDate.of(2004, 12, 22),
-                "123", "222234");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(20000))
+                .term(12)
+                .firstName("Vlad")
+                .lastName("Krivonos")
+                .middleName("Igorevich")
+                .email("vlad58r@gmail.com")
+                .birthdate(LocalDate.of(2004, 12, 22))
+                .passportSeries("111")
+                .passportNumber("222234")
+                .build();
     }
 
     public static LoanApplicationRequestDto getNotCorrectPassportNumberLoanApplicationRequestDto() {
-        return new LoanApplicationRequestDto(
-                valueOf(200000), 12,
-                "Vlad", "Krivonos", "I",
-                "vlad58rgmail.com", LocalDate.of(2004, 12, 22),
-                "123", "12345");
+        return LoanApplicationRequestDto.builder()
+                .amount(valueOf(20000))
+                .term(12)
+                .firstName("Vlad")
+                .lastName("Krivonos")
+                .middleName("Igorevich")
+                .email("vlad58r@gmail.com")
+                .birthdate(LocalDate.of(2004, 12, 22))
+                .passportSeries("1111")
+                .passportNumber("22223")
+                .build();
     }
 
 

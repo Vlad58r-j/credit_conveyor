@@ -1,22 +1,17 @@
-# IDE
-.idea/
-*.iml
-
-# Build output
-**/build/
-**/out/
-
-# Gradle cache
-.gradle/
-**/.gradle/
-
-# OS files
-.DS_Store
-Thumbs.db
+.idea
+conveyor.iml
+conveyor/gradle
+conveyor/.gradle
+conveyor/gradlew
+conveyor/gradlew.bat
+conveyor/settings.gradle
 
 # Logs
 *.log
 
+data/
+kafka_server_jaas.conf/
+zoo1/
 .env
 .env.*
 !.env.example

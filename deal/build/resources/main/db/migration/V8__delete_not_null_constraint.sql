@@ -1,0 +1,8 @@
+ALTER TABLE passport
+ALTER COLUMN issue_branch DROP NOT NULL;
+
+ALTER TABLE passport
+ALTER COLUMN issue_date DROP NOT NULL;
+
+
+
