@@ -1,10 +1,35 @@
 .idea
+**/build
 conveyor.iml
 conveyor/gradle
 conveyor/.gradle
+**/build
 conveyor/gradlew
 conveyor/gradlew.bat
 conveyor/settings.gradle
+deal/.gradle
+deal/gradle
+deal/gradlew
+deal/gradlew.bat
+deal/settings.gradle
+/zoo1
+/kafka_server_jaas.conf
+/data
+# IDE
+.idea/
+*.iml
+
+# Build output
+**/build/
+**/out/
+
+# Gradle cache
+.gradle/
+**/.gradle/
+
+# OS files
+.DS_Store
+Thumbs.db
 
 # Logs
 *.log
