@@ -38,5 +38,9 @@ zoo1/
 .env.*
 !.env.example
 
+application/gradlew
+application/gradlew.bat
+application/settings.gradle
+conveyor/settings.gradle
 application/build/
 application/settings.gradle
