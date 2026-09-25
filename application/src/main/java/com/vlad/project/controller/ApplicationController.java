@@ -3,7 +3,7 @@ package com.vlad.project.controller;
 import com.vlad.project.dto.LoanApplicationRequestDto;
 import com.vlad.project.dto.LoanOfferDto;
 import com.vlad.project.service.ApplicationService;
-import jakarta.validation.Valid;
+import com.vlad.project.service.OfferService;import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,7 @@ import java.util.List;
 public class ApplicationController {
 
     private final ApplicationService service;
+    private final OfferService offerService;
 
     @PostMapping()
     public ResponseEntity<List<LoanOfferDto>> apllication(@RequestBody
@@ -30,6 +31,8 @@ public class ApplicationController {
     @PutMapping("/offer")
     public ResponseEntity<Void> offer(@RequestBody
                                       LoanOfferDto requestDto) {
+        offerService.getOffers(requestDto);
+
         return ResponseEntity.ok().build();
     }
 }
