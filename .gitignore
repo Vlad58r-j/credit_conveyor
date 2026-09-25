@@ -1,17 +1,17 @@
 .idea
-**/build
 conveyor.iml
 conveyor/gradle
 conveyor/.gradle
-**/build
+conveyor/build/
 conveyor/gradlew
 conveyor/gradlew.bat
 conveyor/settings.gradle
-deal/.gradle
+deal/.gradle/
 deal/gradle
 deal/gradlew
 deal/gradlew.bat
 deal/settings.gradle
+deal/build/
 /zoo1
 /kafka_server_jaas.conf
 /data
@@ -19,12 +19,9 @@ deal/settings.gradle
 .idea/
 *.iml
 
-# Build output
-**/build/
 **/out/
 
 # Gradle cache
-.gradle/
 **/.gradle/
 
 # OS files
@@ -40,3 +37,10 @@ zoo1/
 .env
 .env.*
 !.env.example
+
+application/gradlew
+application/gradlew.bat
+application/settings.gradle
+conveyor/settings.gradle
+application/build/
+application/settings.gradle
