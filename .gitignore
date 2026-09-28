@@ -41,4 +41,5 @@ zoo1/
 application/gradlew
 application/gradlew.bat
 application/settings.gradle
+application/gradle
 application/build/
