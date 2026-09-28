@@ -1,6 +1,6 @@
 package com.vlad.project.annotation;
 
-import com.vlad.project.filter.AgeValidation;
+import com.vlad.project.validation.AgeValidation;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
