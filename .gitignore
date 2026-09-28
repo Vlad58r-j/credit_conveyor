@@ -40,3 +40,8 @@ zoo1/
 .env
 .env.*
 !.env.example
+
+application/gradlew
+application/gradlew.bat
+application/settings.gradle
+application/gradle
