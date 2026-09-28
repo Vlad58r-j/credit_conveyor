@@ -1,10 +1,13 @@
 package com.vlad.project.dto;
 
-import lombok.Value;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Value
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoanOfferDto {
 
     Long applicationId;
