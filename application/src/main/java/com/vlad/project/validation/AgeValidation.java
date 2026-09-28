@@ -1,4 +1,4 @@
-package com.vlad.project.filter;
+package com.vlad.project.validation;
 
 import com.vlad.project.annotation.Age;
 import jakarta.validation.ConstraintValidator;
@@ -19,6 +19,6 @@ public class AgeValidation implements ConstraintValidator<Age, LocalDate> {
         Period between = Period.between(value, now);
         return (between.getYears() >= MIN_AGE_FOR_CREDITOR && between.getMonths() == MIN_MONTH_AMOUNT
                 && between.getDays() > MIN_DAY_AMOUNT) ||
-               (between.getYears() >= MIN_AGE_FOR_CREDITOR && between.getMonths() > MIN_MONTH_AMOUNT);
+                (between.getYears() >= MIN_AGE_FOR_CREDITOR && between.getMonths() > MIN_MONTH_AMOUNT);
     }
 }
