@@ -1,4 +1,5 @@
 .idea
+**/build
 conveyor.iml
 conveyor/gradle
 conveyor/.gradle
@@ -38,8 +39,7 @@ zoo1/
 .env.*
 !.env.example
 
-application/gradlew
-application/gradlew.bat
-application/settings.gradle
-application/gradle
-application/build/
+**/gradlew
+**/gradlew.bat
+**/settings.gradle
+**/gradle
