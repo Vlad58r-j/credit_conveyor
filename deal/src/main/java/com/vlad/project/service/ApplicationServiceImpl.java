@@ -4,8 +4,10 @@ import com.vlad.project.database.entity.Application;
 import com.vlad.project.database.entity.AppliedOffer;
 import com.vlad.project.database.entity.Credit;
 import com.vlad.project.database.repository.ApplicationRepository;
+import com.vlad.project.dto.EmailMessage;
 import com.vlad.project.dto.LoanOfferDto;
 import com.vlad.project.dto.enumStatus.ApplicationStatus;
+import com.vlad.project.dto.enumStatus.Theme;
 import com.vlad.project.exception.FindApplicationException;
 import com.vlad.project.exception.UpdateApplicationException;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
+    private final KafkaProducerService kafkaService;
 
     @Override
     @Transactional(readOnly = true)
@@ -55,6 +58,20 @@ public class ApplicationServiceImpl implements ApplicationService {
                         return application;
                     })
                     .map(applicationRepository::save);
+
+            result.ifPresent(application -> {
+                EmailMessage message = EmailMessage.builder()
+                        .address(application.getClient().getEmail())
+                        .theme(Theme.FINISH_REGISTRATION)
+                        .applicationId(application.getId())
+                        .build();
+                try {
+                    kafkaService.sendEmailMessage(message);
+                } catch (Exception e) {
+                    log.error("Ошибки отправки сообщения в брокер");
+                }
+            });
+
             return result.isPresent();
 
         } catch (Exception exception) {

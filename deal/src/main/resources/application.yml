@@ -7,7 +7,7 @@ spring:
 
   jpa:
     properties.hibernate:
-      ddl-auto: create
+      ddl-auto: validate
       show-sql: true
       format_sql: true
       default_schema: deal
@@ -16,6 +16,12 @@ spring:
     schemas: deal
     default-schema: deal
     create-schemas: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
 
 server:
   port: 8081
